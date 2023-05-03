@@ -2,16 +2,15 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
 import Home from "./pages/Home";
 import MainLayout from "./layouts/MainLayout";
+import { ThemeProvider } from "@emotion/react";
+import Theme from "./layouts/Theme";
 
 export function App() {
   return (
     <>
       <Routes>
         <Route path="/" element={<MainLayout />}>
-          <Route path="*" element={<Home />}>
-            <Route index element={<div>overview</div>} />
-            <Route path="event-list" element={<div>list view</div>} />
-          </Route>
+          <Route index element={<Home />} />
         </Route>
       </Routes>
     </>
@@ -21,7 +20,9 @@ export function App() {
 function AppWrapper() {
   return (
     <BrowserRouter>
-      <App />
+      <ThemeProvider theme={Theme}>
+        <App />
+      </ThemeProvider>
     </BrowserRouter>
   );
 }

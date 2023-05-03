@@ -1,15 +1,17 @@
 // import { useState } from "react";
-import { Link, Outlet } from "react-router-dom";
 import Logo from "/holder-1080.jpg";
-import { Button, Grid, TextField } from "@mui/material";
+import { Button, Grid, TextField, Typography } from "@mui/material";
 import {
   CalendarMonthIcon,
   FormatListBulletedIcon,
   GridViewIcon,
   SearchIcon,
 } from "../components/ui/icons";
+import EventOverview from "../features/EventOverview";
+import { EVENTS } from "../mockup";
 
 function Home() {
+  const events = EVENTS;
   // const [count, setCount] = useState(0);
 
   return (
@@ -17,7 +19,7 @@ function Home() {
       <header>
         <img src={Logo} alt="bootshaus club logo"></img>
       </header>
-      <Grid container spacing={2}>
+      <Grid container spacing={2} sx={{ marginBottom: "2em" }}>
         <Grid
           item
           xs={6}
@@ -26,9 +28,12 @@ function Home() {
           justifyContent="left"
           alignItems="center"
         >
-          <h2>Bootshaus Tickest</h2>
+          <Typography variant="h5" sx={{ fontStyle: "bold" }}>
+            Tickets für Bootshaus
+          </Typography>
         </Grid>
         <Grid
+          item
           xs={6}
           md={4}
           display="flex"
@@ -44,14 +49,10 @@ function Home() {
             }}
           />
           <Button>
-            <Link to="/">
-              <GridViewIcon />
-            </Link>
+            <GridViewIcon />
           </Button>
           <Button>
-            <Link to="/event-list">
-              <FormatListBulletedIcon />
-            </Link>
+            <FormatListBulletedIcon />
           </Button>
           <Button>
             <CalendarMonthIcon />
@@ -59,7 +60,7 @@ function Home() {
         </Grid>
       </Grid>
 
-      <Outlet />
+      <EventOverview events={events} />
     </>
   );
 }

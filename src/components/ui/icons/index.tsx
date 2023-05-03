@@ -41,4 +41,8 @@ export const InfoIcon = () => {
   return <AppIcon name="info" />;
 };
 
+export const ChevronRight = () => {
+  return <AppIcon name="chevron_right" />;
+};
+
 export default AppIcon;

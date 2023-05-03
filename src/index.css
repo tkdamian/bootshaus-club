@@ -1,5 +1,6 @@
 :root {
   font-synthesis: none;
+  font-family: "Source Sans Pro", Calibri, Candara, Arial, sans-serif;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
