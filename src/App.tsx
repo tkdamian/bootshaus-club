@@ -8,7 +8,10 @@ export function App() {
     <>
       <Routes>
         <Route path="/" element={<MainLayout />}>
-          <Route index element={<Home />} />
+          <Route path="*" element={<Home />}>
+            <Route index element={<div>overview</div>} />
+            <Route path="event-list" element={<div>list view</div>} />
+          </Route>
         </Route>
       </Routes>
     </>
