@@ -1,29 +1,49 @@
-// import { useState } from "react";
+import { useState } from "react";
 import Logo from "/holder-1080.jpg";
-import { Button, Grid, TextField, Typography } from "@mui/material";
+import { Button, Grid, TextField, Typography, styled } from "@mui/material";
 import {
   CalendarMonthIcon,
   FormatListBulletedIcon,
   GridViewIcon,
   SearchIcon,
 } from "../components/ui/icons";
-import EventOverview from "../features/EventOverview";
+import EventsComponent from "../features/Events";
 import { EVENTS } from "../mockup";
+
+export enum VIEW_TYPES {
+  OVERVIEW = "OVERVIEW",
+  LIST = "LIST",
+  CALENDAR = "CALENDAR",
+}
+
+const ViewButton = styled(Button)(({ theme }) => ({
+  margin: theme.spacing(1),
+  paddingLeft: theme.spacing(0),
+  paddingRight: theme.spacing(0),
+}));
+
+const HeaderStyled = styled("header")(() => ({
+  "& img": {
+    height: "10em",
+  },
+}));
 
 function Home() {
   const events = EVENTS;
-  // const [count, setCount] = useState(0);
-
+  const [view, setView] = useState(VIEW_TYPES.OVERVIEW);
+  const handleChangeView = (view: VIEW_TYPES) => () => {
+    setView(view);
+  };
   return (
     <>
-      <header>
+      <HeaderStyled>
         <img src={Logo} alt="bootshaus club logo"></img>
-      </header>
+      </HeaderStyled>
       <Grid container spacing={2} sx={{ marginBottom: "2em" }}>
         <Grid
           item
           xs={6}
-          md={8}
+          md={7}
           display="flex"
           justifyContent="left"
           alignItems="center"
@@ -35,7 +55,7 @@ function Home() {
         <Grid
           item
           xs={6}
-          md={4}
+          md={5}
           display="flex"
           justifyContent="right"
           alignItems="center"
@@ -47,20 +67,31 @@ function Home() {
             InputProps={{
               startAdornment: <SearchIcon />,
             }}
+            sx={{ marginRight: "1em" }}
           />
-          <Button>
+          <Typography>Ansicht:</Typography>
+          <ViewButton
+            onClick={handleChangeView(VIEW_TYPES.OVERVIEW)}
+            variant={view === VIEW_TYPES.OVERVIEW ? "contained" : "text"}
+          >
             <GridViewIcon />
-          </Button>
-          <Button>
+          </ViewButton>
+          <ViewButton
+            onClick={handleChangeView(VIEW_TYPES.LIST)}
+            variant={view === VIEW_TYPES.LIST ? "contained" : "text"}
+          >
             <FormatListBulletedIcon />
-          </Button>
-          <Button>
+          </ViewButton>
+          <ViewButton
+            onClick={handleChangeView(VIEW_TYPES.CALENDAR)}
+            variant={view === VIEW_TYPES.CALENDAR ? "contained" : "text"}
+          >
             <CalendarMonthIcon />
-          </Button>
+          </ViewButton>
         </Grid>
       </Grid>
 
-      <EventOverview events={events} />
+      <EventsComponent events={events} view={view} />
     </>
   );
 }

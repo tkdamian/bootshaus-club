@@ -5,34 +5,20 @@ import {
   CalendarMonthIcon,
   LocationOnIcon,
   ScheduleIcon,
-  ConfirmationNumberIcon,
-  InfoIcon,
   ChevronRight,
 } from "../components/ui/icons";
 
-type EventOverviewCardType = {
+type EventListItemType = {
   event: EventType;
 };
 
 const StyledCard = styled(Grid)(({ theme }) => ({
-  marginBottom: theme.spacing(4),
+  marginBottom: theme.spacing(0),
+  padding: theme.spacing(1),
 }));
 
-const StyledCover = styled("img")(({ theme }) => ({
-  width: "100%",
-  borderRadius: theme.spacing(2),
-  maxHeight: "230px",
-  objectFit: "cover",
-}));
-
-const StyledContainer = styled(Grid)(({ theme }) => ({
+const EventTitle = styled(Typography)(() => ({
   textAlign: "left",
-  paddingLeft: theme.spacing(5),
-  paddingTop: theme.spacing(1),
-}));
-
-const EventTitle = styled(Typography)(({ theme }) => ({
-  marginBottom: theme.spacing(3),
 }));
 
 const EventInfo = styled(Typography)(({ theme }) => ({
@@ -52,50 +38,39 @@ const EventActionBtn = styled(Button)(({ theme }) => ({
   },
 }));
 
-const EventOverviewCard: FC<EventOverviewCardType> = (props) => {
+const EventListItem: FC<EventListItemType> = (props) => {
   const { event } = props;
   return (
     <StyledCard container>
-      <Grid item md={4}>
-        <StyledCover src={event.coverUrl} />
-      </Grid>
-      <StyledContainer item md={6}>
+      <Grid item md={6}>
         <EventTitle variant="h5" gutterBottom>
           {event.title}
         </EventTitle>
-        <EventInfo>
-          {event.date && (
-            <>
-              <CalendarMonthIcon />
-              <span>{event.date}</span>
-            </>
-          )}
-          {event.time && (
-            <>
-              <ScheduleIcon />
-              <span>{event.time}</span>
-            </>
-          )}
-        </EventInfo>
         {event.location && (
           <EventInfo>
             <LocationOnIcon />
             {event.location}
           </EventInfo>
         )}
-        {event.tickets && (
+      </Grid>
+      <Grid item md={2}>
+        {event.date && (
           <EventInfo>
-            <ConfirmationNumberIcon />
-            <Typography>{`Tickets ab ${event.tickets}`}</Typography>
+            <CalendarMonthIcon />
+            <span>{event.date}</span>
           </EventInfo>
         )}
-        {event.info && (
+        {event.time && (
           <EventInfo>
-            <InfoIcon />
-            {event.info}
+            <ScheduleIcon />
+            <span>{event.time}</span>
           </EventInfo>
         )}
-      </StyledContainer>
+      </Grid>
+      <Grid md={2}>
+        <Typography>Tickets ab</Typography>
+        <Typography sx={{ fontStyle: "bold" }}>{event.tickets}</Typography>
+      </Grid>
       <Grid
         item
         md={2}
@@ -112,4 +87,4 @@ const EventOverviewCard: FC<EventOverviewCardType> = (props) => {
   );
 };
 
-export default EventOverviewCard;
+export default EventListItem;
